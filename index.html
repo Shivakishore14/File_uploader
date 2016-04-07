@@ -5,30 +5,40 @@
 		<script src="js/jquery.js"></script>
 		<link href="css/bootstrap.min.css" rel="stylesheet" />
 		<link href="css/bootstrap-theme.css" rel="stylesheet" />
+		<script src="js/uploader.js"></script>
 		<link href="css/style.css" rel="stylesheet" />
 	</head>
 	<body>
 		<div class="jumbotron"> <h2> My File Uploader v1.0 </h2> </div>
 		<div class="row">
 			<div class="col-md-4"></div>
-			<div class="col-md-4 glyphicon glyphicon-open logo"></div>
+			<div id = "uploadfile" class="col-md-4 glyphicon glyphicon-open logo"></div>
 			<div class="col-md-4"></div>		
 		</div>
 		<div class="row">
 			<div class="col-md-4"></div>
-			<div class="col-md-4"><progress  id="prog" value="60" min="0" max="100" ></progress></div>
+			<div id="uploadtext" class="col-md-4">Click to choose file</div>
+			<div class="col-md-4"></div>		
+		</div>
+		<div class="row">
+			<div class="col-md-4"></div>
+			<div class="col-md-4"><progress  id="prog" value="0" min="0" max="100" ></progress></div>
 			<div class="col-md-4"></div>
 		</div>	
 		<div class="row">
 			<div class="col-md-2"></div>
 			<div class="col-md-3"></div>
-			<div class="col-md-2 btn btn-success">Upload</div>
+			<div id="mybtn" class="col-md-2 btn btn-success">Upload</div>
 			<div class="col-md-3"></div>
 			<div class="col-md-2"></div>
 		</div>
 		<div id="inputblock">
 			<input type="file" id="myfile" name="file"/>
 			<input id="upload" type="button" value="Upload"/>
+		</div>
+		<div class="row">
+			<div id="status" class="col-md-12">
+			</div>
 		</div>
 	
 	</body>
@@ -37,8 +47,17 @@
 		window.onload = function() {
 			$("#inputblock").hide();
 			var ww = $("#prog").width();	
-			$("#prog").width(ww-ww/10);	
+			$("#prog").width(ww-ww/20);	
 		}
-
+		$("#uploadfile , #uploadtext").on('click',function(event) {
+			$("#myfile").trigger("click");
+		});
+		$("#mybtn").click(function(){
+			var a = $("#myfile").val();
+			$("#status").html("Uploading...");
+			$("#myfile").upload("files/hello.py",function(success){
+				$("#status").html(a+" uploaded");
+			},$("#prog"));
+		});
 	</script>
 </html>
