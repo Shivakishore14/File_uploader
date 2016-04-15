@@ -28,7 +28,7 @@ applications=["exe","rpm","deb","dmg","jar","jad","bin","apk","run","msi","pkg"]
 if fileitem.filename:
    fn = os.path.basename(fileitem.filename)
    b=fn.find('.')
-   c=fn[b+1:]
+   c=(fn[b+1:]).lower()
    if c in videos:
 	   filepath='videos/'
    elif c in music:
@@ -41,7 +41,9 @@ if fileitem.filename:
 	   filepath='applications/'
    else:
 	   filepath='others/'
-   
+   if not os.path.exists(filepath):
+	os.makedirs(filepath)
+	
    f = open(filepath + fn, 'wb', 10000)
 
    for chunk in fbuffer(fileitem.file):
